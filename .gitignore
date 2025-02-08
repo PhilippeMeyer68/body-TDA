@@ -21,3 +21,6 @@ __pycache__/
 # pytest coverage
 .coverage
 coverage.xml
+
+# scan file
+*.obj
