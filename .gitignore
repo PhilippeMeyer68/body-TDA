@@ -6,9 +6,6 @@ __pycache__/
 # ignore egg-info
 *.egg-info
 
-# ignore macos file
-.DS_Store
-
 # VScode
 .vscode/*
 
@@ -24,3 +21,6 @@ coverage.xml
 
 # scan file
 *.obj
+
+# data
+data/*
