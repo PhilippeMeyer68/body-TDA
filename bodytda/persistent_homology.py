@@ -2,6 +2,7 @@ import gudhi as gd
 import gudhi.wasserstein as gw
 import matplotlib.pyplot as plt
 import numpy as np
+from gudhi.representations import Silhouette
 
 
 def persistence_diagram(point_cloud, dimension=2, min_persistence=0.0003):
@@ -121,3 +122,21 @@ def wasserstein_distance(pdiagram_decolor_1, pdiagram_decolor_2, p=2, order=2):
         )
         distances.append(distance)
     return np.power(sum(np.power(distance, p) for distance in distances), 1 / p)
+
+
+def silhouette(pdiagram_decolor, n0=25, n1=250, n2=250, weight=lambda x: x[0]):
+    pdiagram_decolor_0 = [pdiagram_decolor[0][:-1]]
+    pdiagram_decolor_1 = [pdiagram_decolor[1]]
+    pdiagram_decolor_2 = [pdiagram_decolor[2]]
+
+    SH0 = Silhouette(resolution=n0)
+    sh0 = SH0.fit_transform(pdiagram_decolor_0)
+
+    SH1 = Silhouette(resolution=n1, weight=weight)
+    sh1 = SH1.fit_transform(pdiagram_decolor_1)
+
+    SH2 = Silhouette(resolution=n2, weight=weight)
+    sh2 = SH2.fit_transform(pdiagram_decolor_2)
+
+    sh = list(sh0[0]) + list(sh1[0]) + list(sh2[0])
+    return sh
